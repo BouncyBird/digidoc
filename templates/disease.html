@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Disease Checker</legend>
+            <p>Check all the symptoms you have</p>
+            <div class="form-check">
+                {{ form.diarreah_vomit(class="form-check-input") }}
+                {{ form.diarreah_vomit.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.body_aches(class="form-check-input") }}
+                {{ form.body_aches.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.runny_nose(class="form-check-input") }}
+                {{ form.runny_nose.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.fever(class="form-check-input") }}
+                {{ form.fever.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.fatigue(class="form-check-input") }}
+                {{ form.fatigue.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.hemorrhage(class="form-check-input") }}
+                {{ form.hemorrhage.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.coughing(class="form-check-input") }}
+                {{ form.coughing.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.shortness_of_breath(class="form-check-input") }}
+                {{ form.shortness_of_breath.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.swollen_lymph_nodes(class="form-check-input") }}
+                {{ form.swollen_lymph_nodes.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.headaches(class="form-check-input") }}
+                {{ form.headaches.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.red_eyes(class="form-check-input") }}
+                {{ form.red_eyes.label(class="form-check-label") }}
+            </div>
+            <div class="form-check">
+                {{ form.rapid_heart_rate(class="form-check-input") }}
+                {{ form.rapid_heart_rate.label(class="form-check-label") }}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}

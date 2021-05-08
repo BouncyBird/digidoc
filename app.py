@@ -1,0 +1,114 @@
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from flask_login import current_user, LoginManager
+from flask_mail import Message, Mail
+import ast
+import requests
+import json
+
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = '1a0303f517b1a1c15d4637c83be89ebc'
+app.config['MAIL_SERVER'] = "smtp.googlemail.com"
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'gitdigidoc@gmail.com'
+app.config['MAIL_PASSWORD'] = 'asdfghjkl!@#$%^&*()'
+mail = Mail()
+mail.init_app(app)
+
+class ContactForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    content = TextAreaField('Your Message', validators=[DataRequired()])
+    submit = SubmitField('Message')
+
+class DiseaseForm(FlaskForm):
+    diarreah_vomit = BooleanField('Diarreah and Vomit')
+    body_aches = BooleanField('Body Aches')
+    runny_nose = BooleanField('Runny Nose')
+    fever = BooleanField('Fever')
+    fatigue = BooleanField('Fatigue')
+    hemorrhage = BooleanField('Hemorrhage')
+    coughing = BooleanField('Coughing')
+    shortness_of_breath = BooleanField('Shortness of Breath')
+    swollen_lymph_nodes = BooleanField('Swollen Lymph')
+    headaches = BooleanField('Headaches')
+    red_eyes = BooleanField('Red Eyes')
+    rapid_heart_rate = BooleanField('Rapid Heart Rate')
+    submit = SubmitField('Check Disease')
+
+
+def get_prediction(data={"Diarreah & Vomit":"Yes","Body Aches":"Yes","Runny Nose":"No","Fever":"Yes","Fatigue":"No","Hemorrhage":"No","Coughing":"Yes","Shortness of Breath":"Yes","Swollen Lymph Nodes":"Yes","Headaches":"Yes","Red eyes":"No","Rapid Heart Rate":"Yes"}):
+  url = 'https://5syr7ttrk5.execute-api.us-east-1.amazonaws.com/Predict/88136aae-a71e-4bf4-98e2-50a9c807258a'
+  r = requests.post(url, data=json.dumps(data))
+  response = getattr(r,'_content').decode("utf-8")
+  print(response)
+  return response
+
+@app.route('/')
+def home():
+    url = 'https://image.freepik.com/free-vector/doctor-patient-sit-medical-office-cartoon-illustration-cabinet-interior-hospital-clinic-with-male-physician-elderly-man-medic-consultation-concept_107791-3609.jpg'
+    return render_template("home.html", url=url)
+
+@app.route('/about')
+def about():
+    return render_template("about.html", title="About")
+
+@app.route('/contact', methods=["GET", "POST"])
+def contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        msg = Message(f'New Message from {form.name.data}', sender=form.email.data, recipients=['djonimuresan@gmail.com', 'eshan.nalajala@gmail.com', 'aarnavkumta09@gmail.com', 'matthewcharlotteyang@gmail.com'])
+        msg.body = form.content.data
+        mail.send(msg)
+        return redirect(url_for('home'))
+    return render_template("contact.html", title="Contact Us", form=form)
+
+def conv(item):
+    if item == True:
+        val = 'Yes'
+    elif item == False:
+        val = 'No'
+    
+    return val
+
+@app.route('/disease_check', methods=["GET", "POST"])
+def disease_check():
+    form = DiseaseForm()
+    if form.validate_on_submit():
+        dd = {"Diarreah & Vomit":conv(form.diarreah_vomit.data),"Body Aches":conv(form.body_aches.data),"Runny Nose":conv(form.runny_nose.data),"Fever":conv(form.fever.data),"Fatigue":conv(form.fatigue.data),"Hemorrhage":conv(form.hemorrhage.data),"Coughing":conv(form.coughing.data),"Shortness of Breath":conv(form.shortness_of_breath.data),"Swollen Lymph Nodes":conv(form.swollen_lymph_nodes.data),"Headaches":conv(form.headaches.data),"Red eyes":conv(form.red_eyes.data),"Rapid Heart Rate":conv(form.rapid_heart_rate.data)}
+        result = get_prediction(data=dd)
+        res = ast.literal_eval(result)
+        res1 = ast.literal_eval(res['body'])
+        if res1['predicted_label'] == 'Youre all good': 
+            flash(res1['predicted_label'], 'success')
+        elif res1['predicted_label'] == 'Ebola' or res1['predicted_label'] == 'Youre dead':
+            flash(res1['predicted_label'], 'danger')
+        else:
+            flash(res1['predicted_label'], 'info')
+    return render_template("disease.html", title="Disease Checker", form=form)
+
+@app.route('/clinics')
+def clinics():
+    url = 'https://raw.githubusercontent.com/BouncyBird/hhoster/main/2021-05-08%20(7).png'
+    return render_template("clinics.html", url=url)
+
+@app.route('/routines')
+def routines():
+    return render_template("routines.html")
+
+@app.route('/routines/stretching')
+def stretching():
+    return render_template("stretching.html")
+
+
+@app.route('/routines/skincare')
+def skincare():
+    return render_template("skincare.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

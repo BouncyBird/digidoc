@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="column">
+        <a href="{{ url_for('stretching') }}"><img
+                src="https://image.freepik.com/free-vector/happy-man-exercising-park_113065-39.jpg"
+                alt="Stretching"></a>
+    </div>
+    <div class="column">
+        <a href="{{ url_for('skincare') }}">
+            <img src="https://image.freepik.com/free-vector/skincare-flat-cartoon-composition-with-young-woman-examining-her-face-with-magnifier_1284-54555.jpg"
+                alt="Skincare"></a>
+    </div>
+</div>
+{% endblock content %}

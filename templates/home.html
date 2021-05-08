@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('disease_check') }}
+"><button type="button" class="btn btn-info btn-lg m-1 lb5" data-tilt data-tilt-scale="1.05">DiseaseCheck</button></a>
+<a href="{{ url_for('disease_check') }}
+"><button type="button" class="btn btn-info btn-lg m-1 lb6" data-tilt data-tilt-scale="1.05">Routines</button></a>
+<a href="{{ url_for('about') }}"><button type="button" class="btn btn-info btn-md m-1 lb2" data-tilt
+                data-tilt-scale="1.05">About
+                Us</button></a>
+<a href="{{ url_for('contact') }}"><button type="button" class="btn btn-info btn-md m-1 lb3" data-tilt
+                data-tilt-scale="1.05">Contact
+                Us</button></a>
+<a href="https://www.instagram.com/gitdigidoctor/
+"><button type="button" class="btn btn-info btn-md m-1 lb4" data-tilt data-tilt-scale="1.05">Instagram</button></a>
+<img src="https://raw.githubusercontent.com/BouncyBird/hhoster/main/oie_oie_overlay%20(1).gif" class="lb">
+{% endblock content %}
