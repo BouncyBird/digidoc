@@ -5,6 +5,7 @@ from wtforms import StringField, SubmitField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user, LoginManager
 from flask_mail import Message, Mail
+from flask_mobility import Mobility
 import ast
 import requests
 import json
@@ -17,6 +18,7 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'gitdigidoc@gmail.com'
 app.config['MAIL_PASSWORD'] = 'asdfghjkl!@#$%^&*()'
+Mobility(app)
 mail = Mail()
 mail.init_app(app)
 
@@ -112,4 +114,4 @@ def skincare():
     return render_template("skincare.html", title='Skincare Routines')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

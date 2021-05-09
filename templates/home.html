@@ -1,32 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
+{% if request.MOBILE %}
 <div>
-    <a href="{{ url_for('disease_check') }}
+        <a href="{{ url_for('disease_check') }}
+    "><button type="button" class="btn btn-info btn-lg m-1" data-tilt data-tilt-scale="1.05" data-aos="zoom-in"
+                        style="position: fixed;left: 28px;bottom: 440px;">DiseaseCheck</button></a>
+        <a href="{{ url_for('routines') }}
+    "><button type="button" class="btn btn-info btn-lg m-1" data-tilt data-tilt-scale="1.05" data-aos="zoom-in"
+                        style="position: fixed;left: 225px;bottom: 440px;">Routines</button></a>
+        <a href="{{ url_for('about') }}"><button type="button" class="btn btn-info btn-md m-1" data-tilt
+                        data-tilt-scale="1.05" data-aos="zoom-in"
+                        style="position: fixed;left: 10px;bottom: 387px;">About
+                        Us</button></a>
+        <a href="{{ url_for('contact') }}"><button type="button" class="btn btn-info btn-md m-1" data-tilt
+                        data-tilt-scale="1.05" data-aos="zoom-in"
+                        style="position: fixed;left: 135px;bottom: 387px;">Contact
+                        Us</button></a>
+        <a href="https://www.instagram.com/gitdigidoctor/
+    "><button type="button" class="btn btn-info btn-md m-1" data-tilt data-tilt-scale="1.05" data-aos="zoom-in"
+                        style="position: fixed;left: 265px;bottom: 387px;">Instagram</button></a>
+</div>
+<img src="https://raw.githubusercontent.com/BouncyBird/hhoster/main/oie_oie_overlay%20(1).gif" data-aos='fade-up'
+        class="lb" style="width: 100%;object-fit: contain;">
+{% else %}
+<div>
+        <a href="{{ url_for('disease_check') }}
     "><button type="button" class="btn btn-info btn-lg m-1 lb5" data-tilt data-tilt-scale="1.05"
-            data-aos="zoom-in">DiseaseCheck</button></a>
-    <a href="{{ url_for('routines') }}
+                        data-aos="zoom-in">DiseaseCheck</button></a>
+        <a href="{{ url_for('routines') }}
     "><button type="button" class="btn btn-info btn-lg m-1 lb6" data-tilt data-tilt-scale="1.05"
-            data-aos="zoom-in">Routines</button></a>
-    <a href="{{ url_for('about') }}"><button type="button" class="btn btn-info btn-md m-1 lb2" data-tilt
-            data-tilt-scale="1.05" data-aos="zoom-in">About
-            Us</button></a>
-    <a href="{{ url_for('contact') }}"><button type="button" class="btn btn-info btn-md m-1 lb3" data-tilt
-            data-tilt-scale="1.05" data-aos="zoom-in">Contact
-            Us</button></a>
-    <a href="https://www.instagram.com/gitdigidoctor/
+                        data-aos="zoom-in">Routines</button></a>
+        <a href="{{ url_for('about') }}"><button type="button" class="btn btn-info btn-md m-1 lb2" data-tilt
+                        data-tilt-scale="1.05" data-aos="zoom-in">About
+                        Us</button></a>
+        <a href="{{ url_for('contact') }}"><button type="button" class="btn btn-info btn-md m-1 lb3" data-tilt
+                        data-tilt-scale="1.05" data-aos="zoom-in">Contact
+                        Us</button></a>
+        <a href="https://www.instagram.com/gitdigidoctor/
     "><button type="button" class="btn btn-info btn-md m-1 lb4" data-tilt data-tilt-scale="1.05"
-            data-aos="zoom-in">Instagram</button></a>
+                        data-aos="zoom-in">Instagram</button></a>
 </div>
 <img src="https://raw.githubusercontent.com/BouncyBird/hhoster/main/oie_oie_overlay%20(1).gif" class="lb"
-    data-aos='fade-up'>
+        data-aos='fade-up'>
+{% endif %}
 {% endblock content %}
 {% block stylesheet %}
 <style>
-    body {
-        background-image: url('https://image.freepik.com/free-vector/doctor-patient-sit-medical-office-cartoon-illustration-cabinet-interior-hospital-clinic-with-male-physician-elderly-man-medic-consultation-concept_107791-3609.jpg');
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-    }
+        body {
+                background-image: url('https://image.freepik.com/free-vector/doctor-patient-sit-medical-office-cartoon-illustration-cabinet-interior-hospital-clinic-with-male-physician-elderly-man-medic-consultation-concept_107791-3609.jpg');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+        }
 </style>
 {% endblock stylesheet %}
