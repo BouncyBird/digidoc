@@ -1,56 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="content-section">
+<div class="content-section" data-aos='fade-up'>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Disease Checker</legend>
             <p>Check all the symptoms you have</p>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.diarreah_vomit(class="form-check-input") }}
                 {{ form.diarreah_vomit.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.body_aches(class="form-check-input") }}
                 {{ form.body_aches.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.runny_nose(class="form-check-input") }}
                 {{ form.runny_nose.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.fever(class="form-check-input") }}
                 {{ form.fever.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.fatigue(class="form-check-input") }}
                 {{ form.fatigue.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.hemorrhage(class="form-check-input") }}
                 {{ form.hemorrhage.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.coughing(class="form-check-input") }}
                 {{ form.coughing.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.shortness_of_breath(class="form-check-input") }}
                 {{ form.shortness_of_breath.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.swollen_lymph_nodes(class="form-check-input") }}
                 {{ form.swollen_lymph_nodes.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.headaches(class="form-check-input") }}
                 {{ form.headaches.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.red_eyes(class="form-check-input") }}
                 {{ form.red_eyes.label(class="form-check-label") }}
             </div>
-            <div class="form-check">
+            <div class="form-check" data-aos="zoom-in">
                 {{ form.rapid_heart_rate(class="form-check-input") }}
                 {{ form.rapid_heart_rate.label(class="form-check-label") }}
             </div>
