@@ -51,8 +51,7 @@ def get_prediction(data={"Diarreah & Vomit":"Yes","Body Aches":"Yes","Runny Nose
 
 @app.route('/')
 def home():
-    url = 'https://image.freepik.com/free-vector/doctor-patient-sit-medical-office-cartoon-illustration-cabinet-interior-hospital-clinic-with-male-physician-elderly-man-medic-consultation-concept_107791-3609.jpg'
-    return render_template("home.html", url=url)
+    return render_template("home.html")
 
 @app.route('/about')
 def about():
@@ -99,16 +98,16 @@ def clinics():
 
 @app.route('/routines')
 def routines():
-    return render_template("routines.html")
+    return render_template("routines.html", title='Routines')
 
 @app.route('/routines/stretching')
 def stretching():
-    return render_template("stretching.html")
+    return render_template("stretching.html", title='Stretching Routines')
 
 
 @app.route('/routines/skincare')
 def skincare():
-    return render_template("skincare.html")
+    return render_template("skincare.html", title='Skincare Routines')
 
 if __name__ == "__main__":
     app.run(debug=True)
