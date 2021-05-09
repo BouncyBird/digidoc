@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+{% if request.MOBILE %}
+<div class="con"><a href="{{ url_for('stretching') }}"><img
+            src="https://image.freepik.com/free-vector/happy-man-exercising-park_113065-39.jpg" alt="Stretching"
+            data-aos='fade-right' style="width: 100%;object-fit: contain;"></a>
+</div>
+<div class="con"><a href="{{ url_for('skincare') }}">
+        <img src="https://image.freepik.com/free-vector/skincare-flat-cartoon-composition-with-young-woman-examining-her-face-with-magnifier_1284-54555.jpg"
+            alt="Skincare" data-aos='fade-right' style="width: 100%;object-fit: contain;"></a></div>
+{% else %}
 <div class="con"><a href="{{ url_for('stretching') }}"><img
             src="https://image.freepik.com/free-vector/happy-man-exercising-park_113065-39.jpg" alt="Stretching"
             data-aos='fade-right'></a>
@@ -7,4 +16,5 @@
 <div class="con"><a href="{{ url_for('skincare') }}">
         <img src="https://image.freepik.com/free-vector/skincare-flat-cartoon-composition-with-young-woman-examining-her-face-with-magnifier_1284-54555.jpg"
             alt="Skincare" data-aos='fade-right'></a></div>
+{% endif %}
 {% endblock content %}

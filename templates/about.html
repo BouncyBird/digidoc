@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>About Us</h1>
+{% if request.MOBILE %}
+<img src="https://raw.githubusercontent.com/BouncyBird/hhoster/main/2021-05-08%20(13).png" alt="About Us"
+    data-aos="zoom-in" style="width: 100%;object-fit: contain;">
+{% else %}
 <img src="https://raw.githubusercontent.com/BouncyBird/hhoster/main/2021-05-08%20(13).png" alt="About Us"
     data-aos="zoom-in">
+{% endif %}
 {% endblock content %}
