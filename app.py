@@ -61,9 +61,11 @@ def about():
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
-        msg = Message(f'New Message from {form.name.data}', sender=form.email.data, recipients=['djonimuresan@gmail.com', 'eshan.nalajala@gmail.com', 'aarnavkumta09@gmail.com', 'matthewcharlotteyang@gmail.com'])
-        msg.body = form.content.data
+        tlen = len(form.name.data) + len(form.email.data) + 3
+        msg = Message(f'New Message from {form.name.data}({form.email.data})', sender=form.email.data, recipients=['djonimuresan@gmail.com', 'eshan.nalajala@gmail.com', 'aarnavkumta09@gmail.com', 'matthewcharlotteyang@gmail.com'])
+        msg.body = f'{form.name.data} - {form.email.data}\n{"-" * tlen}\n' + form.content.data
         mail.send(msg)
+        flash('Message Sent!', 'success')
         return redirect(url_for('home'))
     return render_template("contact.html", title="Contact Us", form=form)
 
