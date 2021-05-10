@@ -53,11 +53,11 @@ def get_prediction(data={"Diarreah & Vomit":"Yes","Body Aches":"Yes","Runny Nose
 
 @app.route('/')
 def home():
-    return render_template("home.html")
+    return render_template("home.html", route='home')
 
 @app.route('/about')
 def about():
-    return render_template("about.html", title="About")
+    return render_template("about.html", title="About", route='about')
 
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
@@ -69,7 +69,7 @@ def contact():
         mail.send(msg)
         flash('Message Sent!', 'success')
         return redirect(url_for('home'))
-    return render_template("contact.html", title="Contact Us", form=form)
+    return render_template("contact.html", title="Contact Us", form=form, route='contact')
 
 def conv(item):
     if item == True:
@@ -93,25 +93,25 @@ def disease_check():
             flash(res1['predicted_label'], 'danger')
         else:
             flash(res1['predicted_label'], 'info')
-    return render_template("disease.html", title="Disease Checker", form=form)
+    return render_template("disease.html", title="Disease Checker", form=form, route='disease_check')
 
 @app.route('/clinics')
 def clinics():
     url = 'https://raw.githubusercontent.com/BouncyBird/hhoster/main/2021-05-08%20(7).png'
-    return render_template("clinics.html", url=url)
+    return render_template("clinics.html", url=url, route='clinics')
 
 @app.route('/routines')
 def routines():
-    return render_template("routines.html", title='Routines')
+    return render_template("routines.html", title='Routines', route='routines')
 
 @app.route('/routines/stretching')
 def stretching():
-    return render_template("stretching.html", title='Stretching Routines')
+    return render_template("stretching.html", title='Stretching Routines', route='stretching')
 
 
 @app.route('/routines/skincare')
 def skincare():
-    return render_template("skincare.html", title='Skincare Routines')
+    return render_template("skincare.html", title='Skincare Routines', route='skincare')
 
 if __name__ == "__main__":
     app.run(debug=False)

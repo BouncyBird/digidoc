@@ -42,6 +42,11 @@ body {
     float:left;
 }
 
+.gridc {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
 h1,
 h2,
 h3,
