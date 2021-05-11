@@ -38,20 +38,24 @@
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{{ url_for('home') }}" data-tilt data-tilt-scale="1.05">{% if
-                        route == 'home' %}<b>Home</b>{% else %}Home{% endif %}</a>
+                        route == 'home' %}<text style="color: white;">Home</text>{% else %}Home{% endif %}</a>
                     <a class="nav-item nav-link" href="{{ url_for('about') }}" data-tilt data-tilt-scale="1.05">{% if
-                        route == 'about' %}<b>About</b>{% else %}About{% endif %}</a>
+                        route == 'about' %}<text style="color: white;">About</text>{% else %}About{% endif %}</a>
                     <a class="nav-item nav-link" href="{{ url_for('disease_check') }}" data-tilt
-                        data-tilt-scale="1.05">{% if route == 'disease_check' %}<b>DiseaseCheck</b>{% else
+                        data-tilt-scale="1.05">{% if route == 'disease_check' %}<text
+                            style="color: white;">DiseaseCheck</text>{% else
                         %}DiseaseCheck{% endif %}</a>
                     <a class="nav-item nav-link" href="{{ url_for('routines') }}" data-tilt data-tilt-scale="1.05">{% if
-                        route == 'routines' %}<b>Routines</b>{% else %}Routines{% endif %}</a>
+                        route == 'routines' %}<text style="color: white;">Routines</text>{% else %}Routines{% endif
+                        %}</a>
                     <a class="nav-item nav-link" href="{{ url_for('clinics') }}" data-tilt data-tilt-scale="1.05">{% if
-                        route == 'clinics' %}<b>Clinics</b>{% else %}Clinics{% endif %}</a>
+                        route == 'clinics' %}<text style="color: white;">Clinics</text>{% else %}Clinics{% endif %}</a>
                 </div>
                 <marquee>
                     <a href="{{ url_for('contact') }}"><button type="button" class="btn btn-info btn-sm m-1" data-tilt
-                            data-tilt-scale="1.05">{% if route == 'contact' %}<b>Contact</b>{% else %}Contact{% endif
+                            data-tilt-scale="1.05">{% if route == 'contact' %}<text
+                                style="color: white;">Contact</text>{% else %}Contact{%
+                            endif
                             %}</button></a>
                 </marquee>
                 <div class="navbar-nav">

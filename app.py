@@ -113,5 +113,9 @@ def stretching():
 def skincare():
     return render_template("skincare.html", title='Skincare Routines', route='skincare')
 
+@app.route('/routines/simple_exercises')
+def simple_exercises():
+    return render_template("exercises.html", title='Simple Exercises', route='exercises')
+
 if __name__ == "__main__":
     app.run(debug=False)

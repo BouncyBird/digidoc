@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h1>Simple Exercises</h1>
+    <hr>
+    <h3>Abs</h3>
+    <p>Stretches listed in the other routine section. For every 5 minutes do 2 sets of the following</p>
+    <ul>
+        <li>10 narrow squats</li>
+        <li>bicycle 2 minutes</li>
+        <li>6 V-ups</li>
+        <li>plank 2 minutes</li>
+        <li>scissor kicks 30 sec</li>
+    </ul>
+    <hr>
+    <p>For every 15 minutes do 4 sets of the following</p>
+    <ul>
+        <li>5 narrow squats</li>
+        <li>bicycle 2 minute</li>
+        <li>plank 1 minute</li>
+        <li>10 V-ups</li>
+    </ul>
+    <hr>
+    <p>5 minutes do 2 sets of the following</p>
+    <ul>
+        <li>bicycle 1 minute</li>
+        <li>5 V8s</li>
+        <li>plank 1 minute</li>
+        <li>scissor kicks 15 sec</li>
+    </ul>
+    <hr>
+    <h3>Cardio</h3>
+    <p>For every 15 minutes do 2 sets of the following</p>
+    <ul>
+        <li>30 jumping jacks</li>
+        <li>30 push-ups</li>
+        <li>30 sit-ups</li>
+        <li>jog in place 30 sec</li>
+    </ul>
+    <hr>
+    <p>For every 15 minutes do 6 sets of the following</p>
+    <ul>
+        <li>25 jumping jacks</li>
+        <li>25 push-ups</li>
+        <li>25 sit-ups</li>
+        <li>jog in place 25 sec</li>
+    </ul>
+    <hr>
+    <p>5 minutes do 2 sets of the following</p>
+    <ul>
+        <li>15 jumping jacks</li>
+        <li>15 push-ups</li>
+        <li>15 sit-ups</li>
+        <li>jog in place 15 sec</li>
+    </ul>
+    <hr>
+</div>
+<div>
+    <a href="{{ url_for('stretching') }}"><img
+            src="https://image.freepik.com/free-vector/happy-man-exercising-park_113065-39.jpg" alt="Stretching"
+            data-aos='fade-right' style="width: 100%;object-fit: contain;"></a>
+</div>
+{% endblock content %}
