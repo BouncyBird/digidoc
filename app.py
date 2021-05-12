@@ -6,6 +6,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from flask_login import current_user, LoginManager
 from flask_mail import Message, Mail
 from flask_mobility import Mobility
+from flask_ckeditor import CKEditor, CKEditorField
 import ast
 import requests
 import json
@@ -21,13 +22,15 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'gitdigidoc@gmail.com'
 app.config['MAIL_PASSWORD'] = 'asdfghjkl!@#$%^&*()'
 Mobility(app)
+ckeditor = CKEditor()
 mail = Mail()
+ckeditor.init_app(app)
 mail.init_app(app)
 
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    content = TextAreaField('Your Message', validators=[DataRequired()])
+    content = CKEditorField('Your Message', validators=[DataRequired()])
     recaptcha = RecaptchaField()
     submit = SubmitField('Message')
 
@@ -67,8 +70,8 @@ def contact():
     form = ContactForm()
     if form.validate_on_submit():
         tlen = len(form.name.data) + len(form.email.data) + 3
-        msg = Message(f'New Message from {form.name.data}({form.email.data})', sender=form.email.data, recipients=['djonimuresan@gmail.com', 'eshan.nalajala@gmail.com', 'aarnavkumta09@gmail.com', 'matthewcharlotteyang@gmail.com'])
-        msg.body = f'{form.name.data} - {form.email.data}\n{"-" * tlen}\n' + form.content.data
+        msg = Message(f'New Message from {form.name.data} - {form.email.data}', sender=form.email.data, recipients=['djonimuresan@gmail.com', 'eshan.nalajala@gmail.com', 'aarnavkumta09@gmail.com', 'matthewcharlotteyang@gmail.com'])
+        msg.html = f'<h4>{form.name.data} - {form.email.data}<br>{"=" * tlen}<br></h4>' + form.content.data
         mail.send(msg)
         flash('Message Sent!', 'success')
         return redirect(url_for('home'))
