@@ -74,6 +74,9 @@ def contact():
         if profanity.contains_profanity(html2text.html2text(form.content.data)):
             flash('We strictly prohibit profane messages', 'danger')
             return redirect(url_for('home'))
+        if requests.get(f'https://disposable.debounce.io/?email={form.email.data}').json()['disposable'] == 'true':
+            flash('Disposable Emails are not allowed. Please try again', 'warning')
+            return redirect(url_for('home'))
         tlen = len(form.name.data) + len(form.email.data) + 3
         msg = Message(f'New Message from {form.name.data} - {form.email.data}', sender=form.email.data, recipients=['djonimuresan@gmail.com', 'eshan.nalajala@gmail.com', 'aarnavkumta09@gmail.com', 'matthewcharlotteyang@gmail.com'])
         msg.html = f'<h4>{form.name.data} - {form.email.data}<br>{"=" * tlen}<br></h4>' + form.content.data
