@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="content-section" data-aos='fade-up'>
+<div class="content-section bg-blue-100 text-gray-900 rounded-lg shadow-lg" data-aos='fade-up'>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Disease Checker</legend>
-            <p>Check all the symptoms you have</p>
+            <p>Check all the symptoms you have</p><br>
             <div class="form-check" data-aos="zoom-in">
                 {{ form.diarreah_vomit(class="form-check-input") }}
                 {{ form.diarreah_vomit.label(class="form-check-label") }}
