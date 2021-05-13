@@ -10,6 +10,8 @@ from flask_ckeditor import CKEditor, CKEditorField
 import ast
 import requests
 import json
+from better_profanity import profanity
+import html2text
 
 
 app = Flask(__name__)
@@ -69,6 +71,9 @@ def about():
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
+        if profanity.contains_profanity(html2text.html2text(form.content.data)):
+            flash('We strictly prohibit profane messages', 'danger')
+            return redirect(url_for('home'))
         tlen = len(form.name.data) + len(form.email.data) + 3
         msg = Message(f'New Message from {form.name.data} - {form.email.data}', sender=form.email.data, recipients=['djonimuresan@gmail.com', 'eshan.nalajala@gmail.com', 'aarnavkumta09@gmail.com', 'matthewcharlotteyang@gmail.com'])
         msg.html = f'<h4>{form.name.data} - {form.email.data}<br>{"=" * tlen}<br></h4>' + form.content.data
