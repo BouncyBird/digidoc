@@ -59,8 +59,18 @@
                             %}</button></a>
                 </marquee>
                 <div class="navbar-nav">
+                    {% if request.MOBILE %}
                     <a class="nav-item nav-link" href="https://www.instagram.com/gitdigidoctor/
-" target="_blank" data-tilt data-tilt-scale="1.05">Instagram</a>
+                    " target="_blank" data-tilt data-tilt-scale="1.05"><img
+                            src="https://orionaesthetics.com/wp-content/uploads/2018/08/2475_new-instagram-text-logo.png"
+                            alt="Instagram"
+                            style="height: auto;width: auto;max-height: 50px;max-width: 200px;display: block;margin-left: auto;margin-right: auto;"></a>
+                    {% else %}
+                    <a class="nav-item nav-link" href="https://www.instagram.com/gitdigidoctor/
+" target="_blank" data-tilt data-tilt-scale="1.05"><img
+                            src="https://cdn.iconscout.com/icon/free/png-256/instagram-1868978-1583142.png"
+                            alt="Instagram" style="height: auto;width: auto;max-height: 20px;max-width: 20px;"></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
