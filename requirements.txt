@@ -38,3 +38,4 @@ Werkzeug
 wincertstore==0.2
 wrapt==1.12.1
 WTForms==2.3.3
+zbar
