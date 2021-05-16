@@ -14,8 +14,8 @@ import requests
 import json
 from better_profanity import profanity
 import html2text
-from pyzbar.pyzbar import decode
-from PIL import Image
+#from pyzbar.pyzbar import decode
+#from PIL import Image
 
 disease_links = {
     'Influenza': 'https://www.cdc.gov/flu/treatment/takingcare.htm',
@@ -92,9 +92,9 @@ class NutriSearchForm(FlaskForm):
     query = StringField('Search Term or UPC', validators=[DataRequired()], render_kw={"placeholder": "Apple"})
     submit = SubmitField('Search')
 
-class NutriScanForm(FlaskForm):
+"""class NutriScanForm(FlaskForm):
     image = FileField('Image of Barcode', validators=[FileRequired()])
-    submit = SubmitField('Search')
+    submit = SubmitField('Search')"""
 
 def get_prediction(data={"Diarreah & Vomit":"Yes","Body Aches":"Yes","Runny Nose":"No","Fever":"Yes","Fatigue":"No","Hemorrhage":"No","Coughing":"Yes","Shortness of Breath":"Yes","Swollen Lymph Nodes":"Yes","Headaches":"Yes","Red eyes":"No","Rapid Heart Rate":"Yes"}):
   url = 'https://5syr7ttrk5.execute-api.us-east-1.amazonaws.com/Predict/88136aae-a71e-4bf4-98e2-50a9c807258a'
@@ -180,7 +180,7 @@ def nutrisearch():
         return render_template('nutrisearch.html', r=res, form=form, title='NutriSearch', route='nutrisearch')
     return render_template('nutrisearch.html', r=[], form=form, title='NutriSearch', route='nutrisearch')
 
-@app.route('/nutriscan', methods=["GET", "POST"])
+"""@app.route('/nutriscan', methods=["GET", "POST"])
 def nutriscan():
     form = NutriScanForm()
     if form.validate_on_submit():
@@ -192,7 +192,7 @@ def nutriscan():
         r = requests.get(f'https://api.edamam.com/api/food-database/v2/parser?app_id=104d2abe&app_key=621914ce184adee2580e7970b7ca5148&upc={d}')
         res = r.json()
         return render_template('nutriscan.html', r=res, form=form, title='NutriScan', route='nutriscan')
-    return render_template('nutriscan.html', r=[], form=form, title='NutriScan', route='nutriscan')
+    return render_template('nutriscan.html', r=[], form=form, title='NutriScan', route='nutriscan')"""
 
 if __name__ == "__main__":
     app.run(debug=False, host='0.0.0.0')
