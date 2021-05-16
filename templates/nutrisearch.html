@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                <h1>NutriSearch</h1>
+            </legend>
+            <div class="form-group">
+                {{ form.query.label(class="form-control-label") }}
+                {% if form.query.errors %}
+                {{ form.query(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.query.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.query(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+<hr>
+<p>{{ r["hints"]|length }} results found</p>
+{% for i in r["hints"] %}
+<div class="content-section">
+    <img src="{{ i['food']['image'] }}" alt="Food Image" style="object-fit: contain;">
+    <br><br><br>
+    <h2 class="article-title">{{ i["food"]["label"] }}</h2>
+    <br>
+    <hr>
+    <p>Category: {{ i["food"]["category"] }}</p>
+    {% if i["food"]["servingSizes"] is defined %}
+    <hr>
+    <p>Serving Size: {{ i["food"]["servingSizes"][0]['quantity'] }} {{
+        i["food"]["servingSizes"][0]['label'] }}(s)</p>{% endif %}
+    <hr>
+    <strong>
+        <p>Nutrition Facts:</p>
+    </strong>
+    <p>Calories: {{ i["food"]["nutrients"]["ENERC_KCAL"] }}</p>
+    <p>Fat: {{ i["food"]["nutrients"]["FAT"] }}</p>
+    <p>Carbohydrates: {{ i["food"]["nutrients"]["CHOCDF"] }}</p>
+    <p>Fiber: {{ i["food"]["nutrients"]["FIBTG"] }}</p>
+    <p>Protein: {{ i["food"]["nutrients"]["PROCNT"] }}</p>
+    <hr>
+    <p><b>Ingredients</b>: {{ i["food"]["foodContentsLabel"] }}</p>
+    <hr>
+    <p>Brand: {{ i["food"]["brand"] }}</p>
+</div>
+{% endfor %}
+
+{% endblock content %}

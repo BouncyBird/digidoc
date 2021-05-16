@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField
+from flask_wtf.file import FileField, FileRequired
+from werkzeug.utils import secure_filename
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user, LoginManager
 from flask_mail import Message, Mail
@@ -12,6 +14,8 @@ import requests
 import json
 from better_profanity import profanity
 import html2text
+from pyzbar.pyzbar import decode
+from PIL import Image
 
 disease_links = {
     'Influenza': 'https://www.cdc.gov/flu/treatment/takingcare.htm',
@@ -63,8 +67,8 @@ def no_profane(form, field):
     if profanity.contains_profanity(html2text.html2text(field.data)):
             raise ValidationError('We strictly prohibit profane messages')
 class ContactForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email', validators=[DataRequired(), Email(), no_dispose])
+    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=20)], render_kw={"placeholder": "Jane Doe"})
+    email = StringField('Email', validators=[DataRequired(), Email(), no_dispose], render_kw={"placeholder": "example@company.com"})
     content = CKEditorField('Your Message', validators=[DataRequired(), no_profane])
     recaptcha = RecaptchaField()
     submit = SubmitField('Message')
@@ -84,6 +88,13 @@ class DiseaseForm(FlaskForm):
     rapid_heart_rate = BooleanField('Rapid Heart Rate')
     submit = SubmitField('Check Disease')
 
+class NutriSearchForm(FlaskForm):
+    query = StringField('Search Term or UPC', validators=[DataRequired()], render_kw={"placeholder": "Apple"})
+    submit = SubmitField('Search')
+
+class NutriScanForm(FlaskForm):
+    image = FileField('Image of Barcode', validators=[FileRequired()])
+    submit = SubmitField('Search')
 
 def get_prediction(data={"Diarreah & Vomit":"Yes","Body Aches":"Yes","Runny Nose":"No","Fever":"Yes","Fatigue":"No","Hemorrhage":"No","Coughing":"Yes","Shortness of Breath":"Yes","Swollen Lymph Nodes":"Yes","Headaches":"Yes","Red eyes":"No","Rapid Heart Rate":"Yes"}):
   url = 'https://5syr7ttrk5.execute-api.us-east-1.amazonaws.com/Predict/88136aae-a71e-4bf4-98e2-50a9c807258a'
@@ -156,6 +167,32 @@ def skincare():
 @app.route('/routines/simple_exercises')
 def simple_exercises():
     return render_template("exercises.html", title='Simple Exercises', route='exercises')
+
+@app.route('/nutrisearch', methods=["GET", "POST"])
+def nutrisearch():
+    form = NutriSearchForm()
+    if form.validate_on_submit():
+        if form.query.data.isnumeric():
+            r = requests.get(f'https://api.edamam.com/api/food-database/v2/parser?app_id=104d2abe&app_key=621914ce184adee2580e7970b7ca5148&upc={form.query.data}')
+        else:
+            r = requests.get(f'https://api.edamam.com/api/food-database/v2/parser?app_id=104d2abe&app_key=621914ce184adee2580e7970b7ca5148&ingr={form.query.data}')
+        res = r.json()
+        return render_template('nutrisearch.html', r=res, form=form, title='NutriSearch', route='nutrisearch')
+    return render_template('nutrisearch.html', r=[], form=form, title='NutriSearch', route='nutrisearch')
+
+@app.route('/nutriscan', methods=["GET", "POST"])
+def nutriscan():
+    form = NutriScanForm()
+    if form.validate_on_submit():
+        d = decode(Image.open(form.image.data))
+        if d == []:
+            flash('ERROR! Image may be corrupted, blank, or not a barcode')
+            return redirect(url_for('nutriscan'))
+        d = d[0][0].decode("utf-8")
+        r = requests.get(f'https://api.edamam.com/api/food-database/v2/parser?app_id=104d2abe&app_key=621914ce184adee2580e7970b7ca5148&upc={d}')
+        res = r.json()
+        return render_template('nutriscan.html', r=res, form=form, title='NutriScan', route='nutriscan')
+    return render_template('nutriscan.html', r=[], form=form, title='NutriScan', route='nutriscan')
 
 if __name__ == "__main__":
     app.run(debug=False, host='0.0.0.0')

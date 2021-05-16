@@ -25,7 +25,9 @@ MarkupSafe
 mccabe==0.6.1
 mypy-extensions==0.4.3
 pathspec==0.8.1
+Pillow
 pylint==2.7.2
+pyzbar
 regex==2021.4.4
 requests==2.25.1
 toml==0.10.2
