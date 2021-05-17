@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Markup
 
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField
 from flask_wtf.file import FileField, FileRequired
 from werkzeug.utils import secure_filename
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 from flask_login import current_user, LoginManager
 from flask_mail import Message, Mail
 from flask_mobility import Mobility
@@ -125,6 +125,12 @@ class NutriSearchForm(FlaskForm):
     vegan = BooleanField('Vegan')
     vegetarian = BooleanField('Vegetarian')
     wheat_free = BooleanField('Wheat Free')
+    calorie_filter1 = IntegerField(
+        'Minimum Calories', validators=[Optional()])
+    calorie_filter2 = IntegerField(
+        'Maximum Calories', validators=[Optional()])
+    category = SelectField('Category', choices=[('both', 'Both'), ('generic-foods', 'Generic Foods'), ('generic-meals',
+                           'Generic Meals'), ('packaged-foods', 'Packaged Foods'), ('fast-foods', 'Fast Foods')])
     submit = SubmitField('Search')
 
 
@@ -233,10 +239,22 @@ def convn(item, protocol):
 def nutrisearch():
     form = NutriSearchForm()
     if form.validate_on_submit():
+        if form.calorie_filter1.data != None and form.calorie_filter2.data != None:
+            calfilt = f'&calories={form.calorie_filter1.data}-{form.calorie_filter2.data}'
+        elif form.calorie_filter1.data != None and form.calorie_filter2.data == None:
+            calfilt = f'&calories={form.calorie_filter1.data}%2B'
+        elif form.calorie_filter1.data == None and form.calorie_filter2.data != None:
+            calfilt = f'&calories=0-{form.calorie_filter2.data}'
+        elif form.calorie_filter1.data == None and form.calorie_filter2.data == None:
+            calfilt = ''
+        if form.category.data == 'both':
+            catfilt = ''
+        elif form.category.data != 'both':
+            catfilt = f'&category={form.category.data}'
         if form.query.data.isnumeric():
-            r = requests.get(f"https://api.edamam.com/api/food-database/v2/parser?app_id=104d2abe&app_key=621914ce184adee2580e7970b7ca5148&upc={form.query.data}{convn(form.alcohol_free.data, 'alcohol-free')}{convn(form.celery_free.data, 'celery-free')}{convn(form.crustacean_free.data, 'crustacean-free')}{convn(form.dairy_free.data, 'dairy-free')}{convn(form.egg_free.data, 'egg-free')}{convn(form.fish_free.data, 'fish-free')}{convn(form.fodmap_free.data, 'fodmap-free')}{convn(form.gluten_free.data, 'gluten-free')}{convn(form.kosher.data, 'kosher')}{convn(form.lupine_free.data, 'lupine-free')}{convn(form.mustard_free.data, 'mustard-free')}{convn(form.No_oil_added.data, 'No-oil-added')}{convn(form.low_sugar.data, 'low-sugar')}{convn(form.paleo.data, 'paleo')}{convn(form.peanut_free.data, 'peanut-free')}{convn(form.pecatarian.data, 'pecatarian')}{convn(form.pork_free.data, 'pork-free')}{convn(form.red_meat_free.data, 'red-meat-free')}{convn(form.sesame_free.data, 'sesame-free')}{convn(form.shellfish_free.data, 'shellfish-free')}{convn(form.soy_free.data, 'soy-free')}{convn(form.tree_nut_free.data, 'tree-nut-free')}{convn(form.vegan.data, 'vegan')}{convn(form.vegetarian.data, 'vegetarian')}{convn(form.wheat_free.data, 'wheat-free')}")
+            r = requests.get(f"https://api.edamam.com/api/food-database/v2/parser?app_id=104d2abe&app_key=621914ce184adee2580e7970b7ca5148&upc={form.query.data}{convn(form.alcohol_free.data, 'alcohol-free')}{convn(form.celery_free.data, 'celery-free')}{convn(form.crustacean_free.data, 'crustacean-free')}{convn(form.dairy_free.data, 'dairy-free')}{convn(form.egg_free.data, 'egg-free')}{convn(form.fish_free.data, 'fish-free')}{convn(form.fodmap_free.data, 'fodmap-free')}{convn(form.gluten_free.data, 'gluten-free')}{convn(form.kosher.data, 'kosher')}{convn(form.lupine_free.data, 'lupine-free')}{convn(form.mustard_free.data, 'mustard-free')}{convn(form.No_oil_added.data, 'No-oil-added')}{convn(form.low_sugar.data, 'low-sugar')}{convn(form.paleo.data, 'paleo')}{convn(form.peanut_free.data, 'peanut-free')}{convn(form.pecatarian.data, 'pecatarian')}{convn(form.pork_free.data, 'pork-free')}{convn(form.red_meat_free.data, 'red-meat-free')}{convn(form.sesame_free.data, 'sesame-free')}{convn(form.shellfish_free.data, 'shellfish-free')}{convn(form.soy_free.data, 'soy-free')}{convn(form.tree_nut_free.data, 'tree-nut-free')}{convn(form.vegan.data, 'vegan')}{convn(form.vegetarian.data, 'vegetarian')}{convn(form.wheat_free.data, 'wheat-free')}{calfilt}{catfilt}")
         else:
-            r = requests.get(f"https://api.edamam.com/api/food-database/v2/parser?app_id=104d2abe&app_key=621914ce184adee2580e7970b7ca5148&ingr={form.query.data}{convn(form.alcohol_free.data, 'alcohol-free')}{convn(form.celery_free.data, 'celery-free')}{convn(form.crustacean_free.data, 'crustacean-free')}{convn(form.dairy_free.data, 'dairy-free')}{convn(form.egg_free.data, 'egg-free')}{convn(form.fish_free.data, 'fish-free')}{convn(form.fodmap_free.data, 'fodmap-free')}{convn(form.gluten_free.data, 'gluten-free')}{convn(form.kosher.data, 'kosher')}{convn(form.lupine_free.data, 'lupine-free')}{convn(form.mustard_free.data, 'mustard-free')}{convn(form.No_oil_added.data, 'No-oil-added')}{convn(form.low_sugar.data, 'low-sugar')}{convn(form.paleo.data, 'paleo')}{convn(form.peanut_free.data, 'peanut-free')}{convn(form.pecatarian.data, 'pecatarian')}{convn(form.pork_free.data, 'pork-free')}{convn(form.red_meat_free.data, 'red-meat-free')}{convn(form.sesame_free.data, 'sesame-free')}{convn(form.shellfish_free.data, 'shellfish-free')}{convn(form.soy_free.data, 'soy-free')}{convn(form.tree_nut_free.data, 'tree-nut-free')}{convn(form.vegan.data, 'vegan')}{convn(form.vegetarian.data, 'vegetarian')}{convn(form.wheat_free.data, 'wheat-free')}")
+            r = requests.get(f"https://api.edamam.com/api/food-database/v2/parser?app_id=104d2abe&app_key=621914ce184adee2580e7970b7ca5148&ingr={form.query.data}{convn(form.alcohol_free.data, 'alcohol-free')}{convn(form.celery_free.data, 'celery-free')}{convn(form.crustacean_free.data, 'crustacean-free')}{convn(form.dairy_free.data, 'dairy-free')}{convn(form.egg_free.data, 'egg-free')}{convn(form.fish_free.data, 'fish-free')}{convn(form.fodmap_free.data, 'fodmap-free')}{convn(form.gluten_free.data, 'gluten-free')}{convn(form.kosher.data, 'kosher')}{convn(form.lupine_free.data, 'lupine-free')}{convn(form.mustard_free.data, 'mustard-free')}{convn(form.No_oil_added.data, 'No-oil-added')}{convn(form.low_sugar.data, 'low-sugar')}{convn(form.paleo.data, 'paleo')}{convn(form.peanut_free.data, 'peanut-free')}{convn(form.pecatarian.data, 'pecatarian')}{convn(form.pork_free.data, 'pork-free')}{convn(form.red_meat_free.data, 'red-meat-free')}{convn(form.sesame_free.data, 'sesame-free')}{convn(form.shellfish_free.data, 'shellfish-free')}{convn(form.soy_free.data, 'soy-free')}{convn(form.tree_nut_free.data, 'tree-nut-free')}{convn(form.vegan.data, 'vegan')}{convn(form.vegetarian.data, 'vegetarian')}{convn(form.wheat_free.data, 'wheat-free')}{calfilt}{catfilt}")
         res = r.json()
         return render_template('nutrisearch.html', r=res, form=form, title='NutriSearch', route='nutrisearch')
     return render_template('nutrisearch.html', r=[], form=form, title='NutriSearch', route='nutrisearch')

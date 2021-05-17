@@ -9,7 +9,7 @@
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">
-                <h1 class="text-4xl font-bold">NutriSearch</h1>
+                <h1 class="text-5xl font-bold pb-2">NutriSearch</h1>
             </legend>
             <p class="pb-3">Have a barcode you want to scan? Just enter the numbers below the barcode(thats the UPC). Or
                 use a online
@@ -131,6 +131,47 @@
                     {{ form.wheat_free.label(class="form-check-label") }}
                 </div>
             </div>
+            <div class="flex flex-row flex-wrap space-x-4 pt-2">
+                <div class="form-group">
+                    {{ form.calorie_filter1.label(class="form-control-label font-bold") }}
+                    {% if form.calorie_filter1.errors %}
+                    {{ form.calorie_filter1(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.calorie_filter1.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.calorie_filter1(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.calorie_filter2.label(class="form-control-label font-bold") }}
+                    {% if form.calorie_filter1.errors %}
+                    {{ form.calorie_filter2(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.calorie_filter2.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.calorie_filter2(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.category.label(class="form-control-label font-bold") }}
+                {% if form.category.errors %}
+                {{ form.category(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.category.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.category(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}
@@ -138,32 +179,34 @@
     </form>
 </div>
 <hr>
-<p class="pt-3">{{ r["hints"]|length }} results found</p>
+<p class="pt-3 pb-3">{{ r["hints"]|length }} results found</p>
 {% for i in r["hints"] %}
 <div class="content-section">
     <img src="{{ i['food']['image'] }}" alt="Food Image" style="object-fit: contain;">
     <br><br><br>
-    <h2 class="article-title">{{ i["food"]["label"] }}</h2>
+    <h2 class="article-title text-3xl font-bold">{{ i["food"]["label"] }}</h2>
     <br>
     <hr>
-    <p>Category: {{ i["food"]["category"] }}</p>
+    <p class="pb-2 pt-2">Category: {{ i["food"]["category"] }}</p>
     {% if i["food"]["servingSizes"] is defined %}
     <hr>
-    <p>Serving Size: {{ i["food"]["servingSizes"][0]['quantity'] }} {{
+    <p class="pt-2 pb-2">Serving Size: {{ i["food"]["servingSizes"][0]['quantity'] }} {{
         i["food"]["servingSizes"][0]['label'] }}(s)</p>{% endif %}
     <hr>
-    <strong>
-        <p>Nutrition Facts:</p>
-    </strong>
-    <p>Calories: {{ i["food"]["nutrients"]["ENERC_KCAL"] }}</p>
-    <p>Fat: {{ i["food"]["nutrients"]["FAT"] }}</p>
-    <p>Carbohydrates: {{ i["food"]["nutrients"]["CHOCDF"] }}</p>
-    <p>Fiber: {{ i["food"]["nutrients"]["FIBTG"] }}</p>
-    <p>Protein: {{ i["food"]["nutrients"]["PROCNT"] }}</p>
+    <div class="pt-2 pb-2">
+        <strong>
+            <p>Nutrition Facts:</p>
+        </strong>
+        <p>Calories: {{ i["food"]["nutrients"]["ENERC_KCAL"] }}</p>
+        <p>Fat: {{ i["food"]["nutrients"]["FAT"] }}</p>
+        <p>Carbohydrates: {{ i["food"]["nutrients"]["CHOCDF"] }}</p>
+        <p>Fiber: {{ i["food"]["nutrients"]["FIBTG"] }}</p>
+        <p>Protein: {{ i["food"]["nutrients"]["PROCNT"] }}</p>
+    </div>
     <hr>
-    <p><b>Ingredients</b>: {{ i["food"]["foodContentsLabel"] }}</p>
+    <p class="pt-2 pb-2"><b>Ingredients</b>: {{ i["food"]["foodContentsLabel"] }}</p>
     <hr>
-    <p>Brand: {{ i["food"]["brand"] }}</p>
+    <p class="pt-2">Brand: {{ i["food"]["brand"] }}</p>
 </div>
 {% endfor %}
 
