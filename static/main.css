@@ -34,6 +34,12 @@
     bottom: 580px;
 }
 
+.lb7 {
+    position: fixed;
+    left: 172px;
+    bottom: 640px;
+}
+
 body {
     color: #333333;
 }

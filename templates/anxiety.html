@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-5xl font-bold pb-3">Anxiety</h1>
+<hr>
+<h3 class="text-3xl pt-2 pb-3">Things to try:</h3>
+<ul class="list-disc pb-2">
+    <li>Take naps. A 10-20 minute nap gives you mental alertness and lets you feel rejuvenated</li>
+    <li>Think of things to be thankful for. You might feel scared or anxious of what will happen next, but if you
+        realize what you have and how much you have, you will feel more relieved.</li>
+    <li>Question why you feel anxious. Is the worry realistic? What would make you feel better about what you are
+        worried about.</li>
+    <li>Drink water. studies have shown that dehydration can cause the bravest of people to worry about the simplest
+        things. Drinking water will make you feel better</li>
+    <li>Exersize. While this isn’t as useful as napping or drinking releasing endorphins will relieve stress and make yo
+        feel happier.</li>
+</ul>
+<hr>
+<h3 class="text-3xl pt-2 pb-3">Meditation:</h3>
+<ul class="list-disc pb-2">
+    <li>When you are scared of something or worry try this breathing technique.</li>
+    <li>Breathe in for seconds</li>
+    <li>Hold for two seconds,</li>
+    <li>And breathe out for 4 seconds</li>
+    <br>
+    <li>Think of this as you do it</li>
+    <li>In one, two</li>
+    <li>Hold one, two</li>
+    <li>Out two, three, four</li>
+</ul>
+<hr class="pb-2">
+<a href="{{ url_for('asmr') }}" class="text-3xl pt-6 pb-3 text-indigo-500">Try ASMR</a>
+{% endblock content %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tailwind.css') }}">
+{% endblock stylesheet %}

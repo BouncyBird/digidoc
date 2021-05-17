@@ -62,6 +62,17 @@
                         if
                         route == 'nutrisearch' %}<text style="color: white;">NutriSearch</text>{% else %}NutriSearch{%
                         endif %}</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" data-tilt data-tilt-scale="1.05">
+                            {% if route == 'mental_health' %}<text style="color: white;">MentalHealth</text>{% else
+                            %}MentalHealth{%endif %}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('anxiety') }}">Anxiety</a>
+                            <a class="dropdown-item" href="{{ url_for('asmr') }}">ASMR</a>
+                        </div>
+                    </li>
                 </div>
                 <marquee>
                     <a href="{{ url_for('contact') }}"><button type="button" class="btn btn-info btn-sm m-1" data-tilt

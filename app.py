@@ -274,5 +274,21 @@ def nutriscan():
         return render_template('nutriscan.html', r=res, form=form, title='NutriScan', route='nutriscan')
     return render_template('nutriscan.html', r=[], form=form, title='NutriScan', route='nutriscan')"""
 
+
+@app.route('/mentalhealth')
+def mental_health():
+    return render_template('mental_health.html', title='Mental Health', route='mental_health')
+
+
+@app.route('/mentalhealth/anxiety')
+def anxiety():
+    return render_template('anxiety.html', title='Anxiety - Mental Health', route='mental_health')
+
+
+@app.route('/mentalhealth/asmr')
+def asmr():
+    return render_template('asmr.html', title='ASMR - Mental Health', route='mental_health')
+
+
 if __name__ == "__main__":
     app.run(debug=False, host='0.0.0.0')
