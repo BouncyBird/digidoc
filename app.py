@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Markup
-
+from flask_assets import Bundle, Environment
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField
 from flask_wtf.file import FileField, FileRequired
@@ -45,6 +45,7 @@ disease_extra = {
 }
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = '1a0303f517b1a1c15d4637c83be89ebc'
 app.config['RECAPTCHA_PUBLIC_KEY'] = '6Lc46NEaAAAAACT9wezgGCyNFGxld_lLC6y8Zko1'
 app.config['RECAPTCHA_PRIVATE_KEY'] = '6Lc46NEaAAAAABA089xpPhOB2e-MZB-EsoOyXXLO'
