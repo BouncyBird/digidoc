@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                <h1 class="text-5xl font-bold pb-2">ReciSearch</h1>
+            </legend>
+            <div class="form-group">
+                {{ form.query.label(class="form-control-label font-bold") }}
+                {% if form.query.errors %}
+                {{ form.query(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.query.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.query(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <p class="font-bold">Filters:</p>
+            <div class="flex flex-row flex-wrap space-x-4">
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.alcohol_free(class="form-check-input") }}
+                    {{ form.alcohol_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.celery_free(class="form-check-input") }}
+                    {{ form.celery_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.crustacean_free(class="form-check-input") }}
+                    {{ form.crustacean_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.dairy_free(class="form-check-input") }}
+                    {{ form.dairy_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.egg_free(class="form-check-input") }}
+                    {{ form.egg_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.fish_free(class="form-check-input") }}
+                    {{ form.fish_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.fodmap_free(class="form-check-input") }}
+                    {{ form.fodmap_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.gluten_free(class="form-check-input") }}
+                    {{ form.gluten_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.kosher(class="form-check-input") }}
+                    {{ form.kosher.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.lupine_free(class="form-check-input") }}
+                    {{ form.lupine_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.mustard_free(class="form-check-input") }}
+                    {{ form.mustard_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.No_oil_added(class="form-check-input") }}
+                    {{ form.No_oil_added.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.low_sugar(class="form-check-input") }}
+                    {{ form.low_sugar.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.paleo(class="form-check-input") }}
+                    {{ form.paleo.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.peanut_free(class="form-check-input") }}
+                    {{ form.peanut_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.pecatarian(class="form-check-input") }}
+                    {{ form.pecatarian.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.pork_free(class="form-check-input") }}
+                    {{ form.pork_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.red_meat_free(class="form-check-input") }}
+                    {{ form.red_meat_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.sesame_free(class="form-check-input") }}
+                    {{ form.sesame_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.shellfish_free(class="form-check-input") }}
+                    {{ form.shellfish_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.soy_free(class="form-check-input") }}
+                    {{ form.soy_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.tree_nut_free(class="form-check-input") }}
+                    {{ form.tree_nut_free.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.vegan(class="form-check-input") }}
+                    {{ form.vegan.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.vegetarian(class="form-check-input") }}
+                    {{ form.vegetarian.label(class="form-check-label") }}
+                </div>
+                <div class="form-check" data-aos="zoom-in">
+                    {{ form.wheat_free(class="form-check-input") }}
+                    {{ form.wheat_free.label(class="form-check-label") }}
+                </div>
+            </div>
+            <div class="flex flex-row flex-wrap space-x-4 pt-2">
+                <div class="form-group">
+                    {{ form.calorie_filter1.label(class="form-control-label font-bold") }}
+                    {% if form.calorie_filter1.errors %}
+                    {{ form.calorie_filter1(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.calorie_filter1.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.calorie_filter1(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.calorie_filter2.label(class="form-control-label font-bold") }}
+                    {% if form.calorie_filter1.errors %}
+                    {{ form.calorie_filter2(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.calorie_filter2.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.calorie_filter2(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.cuisines.label(class="form-control-label font-bold") }}
+                {% if form.cuisines.errors %}
+                {{ form.cuisines(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.cuisines.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.cuisines(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div>
+                {{ form.dishtype.label(class="form-control-label font-bold") }}
+                {% if form.dishtype.errors %}
+                {{ form.dishtype(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.dishtype.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.dishtype(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.mealtype.label(class="form-control-label font-bold") }}
+                {% if form.mealtype.errors %}
+                {{ form.mealtype(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.mealtype.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.mealtype(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.diet.label(class="form-control-label font-bold") }}
+                {% if form.diet.errors %}
+                {{ form.diet(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.diet.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.diet(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+<hr>
+
+<p class="pt-3 pb-3">{{ r["hits"]|length }} results found</p>
+{% for i in r["hits"] %}
+<div class="content-section">
+    <img src="{{ i['recipe']['image'] }}" alt="Food Image" style="object-fit: contain;">
+    <br><br><br>
+    <h2 class="article-title text-3xl font-bold">{{ i["recipe"]["label"] }}</h2>
+    <br>
+    <hr>
+    <p class="pt-2"><strong>Servings/Yield</strong>: {{ i["recipe"]["yield"] }}</p>
+    <p class="pb-2"><strong>Time(Prep and Cook)</strong>: {{ i["recipe"]["totalTime"] }} minute(s)</p>
+    <hr>
+    <div class="flex flex-row flex-wrap space-x-8 pt-2 pb-2">
+        <div class="">
+            <strong>
+                <p>Nutrition Facts(per serving):</p>
+            </strong>
+            <p><b>Calories</b>: {{ i["recipe"]["totalNutrients"]["ENERC_KCAL"]["quantity"] // i["recipe"]["yield"] }} |
+                {{ i["recipe"]["totalDaily"]["ENERC_KCAL"]["quantity"] // i["recipe"]["yield"] }} %
+                DV
+            </p>
+            <p><b>Fat</b>: {{ i["recipe"]["totalNutrients"]["FAT"]["quantity"] // i["recipe"]["yield"] }} gram(s) |
+                {{ i["recipe"]["totalDaily"]["FAT"]["quantity"] // i["recipe"]["yield"] }} %
+                DV</p>
+            <p><b>Sodium</b>: {{ i["recipe"]["totalNutrients"]["NA"]["quantity"] // i["recipe"]["yield"] }}
+                gram(s) |
+                {{ i["recipe"]["totalDaily"]["NA"]["quantity"] // i["recipe"]["yield"] }} %
+                DV
+            </p>
+            <p><b>Carbohydrates</b>: {{ i["recipe"]["totalNutrients"]["CHOCDF"]["quantity"] // i["recipe"]["yield"] }}
+                gram(s) |
+                {{ i["recipe"]["totalDaily"]["CHOCDF"]["quantity"] // i["recipe"]["yield"] }} %
+                DV
+            </p>
+            <p><b>Fiber</b>: {{ i["recipe"]["totalNutrients"]["FIBTG"]["quantity"] // i["recipe"]["yield"] }} gram(s) |
+                {{ i["recipe"]["totalDaily"]["FIBTG"]["quantity"] // i["recipe"]["yield"] }} %
+                DV
+            </p>
+            <p><b>Sugar</b>: {{ i["recipe"]["totalNutrients"]["SUGAR"]["quantity"] // i["recipe"]["yield"] }} gram(s)
+            </p>
+            <p><b>Protein</b>: {{ i["recipe"]["totalNutrients"]["PROCNT"]["quantity"] // i["recipe"]["yield"] }}
+                gram(s) |
+                {{ i["recipe"]["totalDaily"]["PROCNT"]["quantity"] // i["recipe"]["yield"] }} %
+                DV
+            </p>
+            <p><b>Cholesterol</b>: {{ i["recipe"]["totalNutrients"]["CHOLE"]["quantity"] // i["recipe"]["yield"] }}
+                gram(s) |
+                {{ i["recipe"]["totalDaily"]["CHOLE"]["quantity"] // i["recipe"]["yield"] }} %
+                DV
+            </p>
+        </div>
+        <div class="">
+            <strong>
+                <p>Nutrition Facts(per recipe):</p>
+            </strong>
+            <p><b>Calories</b>: {{ i["recipe"]["totalNutrients"]["ENERC_KCAL"]["quantity"]|round }} |
+                {{ i["recipe"]["totalDaily"]["ENERC_KCAL"]["quantity"]|round }} %
+                DV</p>
+            <p><b>Fat</b>: {{ i["recipe"]["totalNutrients"]["FAT"]["quantity"]|round }} gram(s) |
+                {{ i["recipe"]["totalDaily"]["FAT"]["quantity"]|round }} %
+                DV</p>
+            <p><b>Sodium</b>: {{ i["recipe"]["totalNutrients"]["NA"]["quantity"]|round }} gram(s) |
+                {{ i["recipe"]["totalDaily"]["NA"]["quantity"]|round }} %
+                DV</p>
+            <p><b>Carbohydrates</b>: {{ i["recipe"]["totalNutrients"]["CHOCDF"]["quantity"]|round }} gram(s) |
+                {{ i["recipe"]["totalDaily"]["CHOCDF"]["quantity"]|round }} %
+                DV</p>
+            <p><b>Fiber</b>: {{ i["recipe"]["totalNutrients"]["FIBTG"]["quantity"]|round }} gram(s) |
+                {{ i["recipe"]["totalDaily"]["FIBTG"]["quantity"]|round }} %
+                DV</p>
+            <p><b>Sugar</b>: {{ i["recipe"]["totalNutrients"]["SUGAR"]["quantity"]|round }} gram(s)</p>
+            <p><b>Protein</b>: {{ i["recipe"]["totalNutrients"]["PROCNT"]["quantity"]|round }} gram(s) |
+                {{ i["recipe"]["totalDaily"]["PROCNT"]["quantity"]|round }} %
+                DV</p>
+            <p><b>Cholesterol</b>: {{ i["recipe"]["totalNutrients"]["CHOLE"]["quantity"]|round }} gram(s) |
+                {{ i["recipe"]["totalDaily"]["CHOLE"]["quantity"]|round }} %
+                DV</p>
+        </div>
+    </div>
+    <hr>
+    <p class="pt-2"><strong>Diet Labels:</strong> {% for iii in i["recipe"]["dietLabels"] %}{{ iii }}, {% endfor %}</p>
+    <p><strong>Health Labels:</strong> {% for iiii in i["recipe"]["healthLabels"] %}{{ iiii }}, {% endfor %}</p>
+    <p class="pb-2"><strong>Cautions:</strong> {% for iiiii in i["recipe"]["cautions"] %}{{ iiiii }}, {% endfor %}</p>
+    <hr>
+    <p class="pt-2"><strong>Cuisine:</strong> {% for a in i["recipe"]["cuisineType"] %}{{ a }}, {% endfor %}</p>
+    <p><strong>Meal Type:</strong> {% for aa in i["recipe"]["mealType"] %}{{ aa }}, {% endfor %}</p>
+    <p class="pb-2"><strong>Dish Type:</strong> {% for aaa in i["recipe"]["dishType"] %}{{ aaa }}, {% endfor %}</p>
+    <hr>
+    <p class="pt-2 pb-2"><b>Ingredients({{ i["recipe"]["ingredientLines"]|length }})</b>:
+    <ul class="list-disc pl-3 pb-2">{% for ii in i["recipe"]["ingredientLines"] %}<li>{{ ii }}</li>{% endfor %}</ul>
+    </p>
+    <hr>
+    <p class="pt-2">Source: {{ i["recipe"]["source"] }}</p>
+    <a href="{{ i['recipe']['url'] }}" class="text-indigo-500">Full Recipe</a><br>
+    <a href="{{ i['recipe']['shareAs'] }}" class="text-indigo-500">More Info</a>
+</div>
+{% endfor %}
+
+{% endblock content %}

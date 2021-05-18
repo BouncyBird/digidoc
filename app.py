@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Markup
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField, FieldList
 from flask_wtf.file import FileField, FileRequired
 from werkzeug.utils import secure_filename
+from wtforms.fields.core import Field
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 from flask_login import current_user, LoginManager
 from flask_mail import Message, Mail
@@ -134,6 +135,54 @@ class NutriSearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 
+class ReciSearchForm(FlaskForm):
+    query = StringField('Search Term', validators=[
+                        DataRequired()], render_kw={"placeholder": "Chicken"})
+    alcohol_free = BooleanField('Alcohol Free')
+    celery_free = BooleanField('Celery Free')
+    crustacean_free = BooleanField('Crustacean Free')
+    dairy_free = BooleanField('Dairy Free')
+    egg_free = BooleanField('Egg Free')
+    fish_free = BooleanField('Fish Free')
+    fodmap_free = BooleanField('FODMAP Free')
+    gluten_free = BooleanField('Gluten Free')
+    kosher = BooleanField('Kosher')
+    lupine_free = BooleanField('Lupine Free')
+    mustard_free = BooleanField('Mustard Free')
+    No_oil_added = BooleanField('No Oil Added')
+    low_sugar = BooleanField('Low Sugar')
+    paleo = BooleanField('Paleo')
+    peanut_free = BooleanField('Peanut Free')
+    pecatarian = BooleanField('Pescatarian')
+    pork_free = BooleanField('Pork Free')
+    red_meat_free = BooleanField('Red Meat Free')
+    sesame_free = BooleanField('Sesame Free')
+    shellfish_free = BooleanField('Shellfish Free')
+    soy_free = BooleanField('Soy Free')
+    tree_nut_free = BooleanField('Tree Nut Free')
+    vegan = BooleanField('Vegan')
+    vegetarian = BooleanField('Vegetarian')
+    wheat_free = BooleanField('Wheat Free')
+    calorie_filter1 = IntegerField(
+        'Minimum Calories(Per serving)', validators=[Optional()])
+    calorie_filter2 = IntegerField(
+        'Maximum Calories(Per serving)', validators=[Optional()])
+    time_filter1 = IntegerField(
+        'Minimum Minutes(Prep and Cooking)', validators=[Optional()])
+    time_filter2 = IntegerField(
+        'Maximum Minutes(Prep and Cooking)', validators=[Optional()])
+    max_ingredients = IntegerField(
+        'Maximum Ingredients', validators=[Optional()])
+    cuisines = StringField('Cuisine - Seperate by comma')
+    dishtype = StringField(
+        'Type of Dish(soup, salad, sandwich, dessert, etc.) - Seperate by comma')
+    mealtype = SelectField('Meal Type', choices=[(
+        'all', 'All'), ('breakfast', 'Breakfast'), ('lunch', 'Lunch'), ('dinner', 'Dinner'), ('snack', 'Snack')])
+    diet = SelectField('Diet Type', choices=[('all', 'All'), ('balanced', 'Balanced'), ('high-protein', 'High Protein'),
+                       ('high-fiber', 'High Fiber'), ('low-fat', 'Low Fat'), ('low-carb', 'Low Carbs'), ('low-sodium', 'Low Sodium')])
+    submit = SubmitField('Search')
+
+
 """class NutriScanForm(FlaskForm):
     image = FileField('Image of Barcode', validators=[FileRequired()])
     submit = SubmitField('Search')"""
@@ -260,6 +309,70 @@ def nutrisearch():
     return render_template('nutrisearch.html', r=[], form=form, title='NutriSearch', route='nutrisearch')
 
 
+@app.route('/recisearch', methods=["GET", "POST"])
+def recisearch():
+    form = ReciSearchForm()
+    if form.validate_on_submit():
+        if form.calorie_filter1.data != None and form.calorie_filter2.data != None:
+            calfilt = f'&calories={form.calorie_filter1.data}-{form.calorie_filter2.data}'
+        elif form.calorie_filter1.data != None and form.calorie_filter2.data == None:
+            calfilt = f'&calories={form.calorie_filter1.data}%2B'
+        elif form.calorie_filter1.data == None and form.calorie_filter2.data != None:
+            calfilt = f'&calories=0-{form.calorie_filter2.data}'
+        elif form.calorie_filter1.data == None and form.calorie_filter2.data == None:
+            calfilt = ''
+        if form.time_filter1.data != None and form.time_filter2.data != None:
+            timefilt = f'&time={form.time_filter1.data}-{form.time_filter2.data}'
+        elif form.calorie_filter1.data != None and form.time_filter2.data == None:
+            timefilt = f'&time={form.ctime_filter1.data}%2B'
+        elif form.time_filter1.data == None and form.time_filter2.data != None:
+            timefilt = f'&time=0-{form.time_filter2.data}'
+        elif form.time_filter1.data == None and form.time_filter2.data == None:
+            timefilt = ''
+        if form.max_ingredients.data != None:
+            mifilt = f'&ingr={form.max_ingredients.data}'
+        else:
+            mifilt = ''
+        if form.cuisines.data != '':
+            cl = '[' + form.cuisines.data + ']'
+            try:
+                cl = ast.literal_eval(cl)
+            except:
+                flash('Error parsing cuisines', 'danger')
+                return redirect(url_for('recisearch'))
+            cll = len(cl)
+            fcl = ''
+            for i in cl:
+                fcl = fcl + '&cuisineType=' + i
+        else:
+            fcl = ''
+        if form.dishtype.data != '':
+            dl = '[' + form.cuisines.data + ']'
+            try:
+                dl = ast.literal_eval(dl)
+            except:
+                flash('Error parsing dish type', 'danger')
+                return redirect(url_for('recisearch'))
+            dll = len(dl)
+            fdl = ''
+            for i in dl:
+                fdl = fdl + '&dishType=' + i
+        else:
+            fdl = ''
+        if form.mealtype.data != 'all':
+            mtl = form.mealtype.data
+        else:
+            mtl = ''
+        if form.diet.data != 'all':
+            ddtl = form.diet.data
+        else:
+            ddtl = ''
+        r = requests.get(f"https://api.edamam.com/search?app_id=ffb22013&app_key=0253bf93b7dd1e87cffc7c480c42242f&q={form.query.data}{convn(form.alcohol_free.data, 'alcohol-free')}{convn(form.celery_free.data, 'celery-free')}{convn(form.crustacean_free.data, 'crustacean-free')}{convn(form.dairy_free.data, 'dairy-free')}{convn(form.egg_free.data, 'egg-free')}{convn(form.fish_free.data, 'fish-free')}{convn(form.fodmap_free.data, 'fodmap-free')}{convn(form.gluten_free.data, 'gluten-free')}{convn(form.kosher.data, 'kosher')}{convn(form.lupine_free.data, 'lupine-free')}{convn(form.mustard_free.data, 'mustard-free')}{convn(form.No_oil_added.data, 'No-oil-added')}{convn(form.low_sugar.data, 'low-sugar')}{convn(form.paleo.data, 'paleo')}{convn(form.peanut_free.data, 'peanut-free')}{convn(form.pecatarian.data, 'pecatarian')}{convn(form.pork_free.data, 'pork-free')}{convn(form.red_meat_free.data, 'red-meat-free')}{convn(form.sesame_free.data, 'sesame-free')}{convn(form.shellfish_free.data, 'shellfish-free')}{convn(form.soy_free.data, 'soy-free')}{convn(form.tree_nut_free.data, 'tree-nut-free')}{convn(form.vegan.data, 'vegan')}{convn(form.vegetarian.data, 'vegetarian')}{convn(form.wheat_free.data, 'wheat-free')}{calfilt}{timefilt}{mifilt}{fcl}{fdl}{mtl}{ddtl}")
+        res = r.json()
+        return render_template('recisearch.html', r=res, form=form, title='ReciSearch', route='recisearch')
+    return render_template('recisearch.html', r=[], form=form, title='ReciSearch', route='recisearch')
+
+
 """@app.route('/nutriscan', methods=["GET", "POST"])
 def nutriscan():
     form = NutriScanForm()
@@ -288,6 +401,16 @@ def anxiety():
 @app.route('/mentalhealth/asmr')
 def asmr():
     return render_template('asmr.html', title='ASMR - Mental Health', route='mental_health')
+
+
+@app.route('/mentalhealth/depression')
+def depression():
+    return render_template('depression.html', title='Depression - Mental Health', route='mental_health')
+
+
+@app.route('/mentalhealth/anger')
+def anger():
+    return render_template('anger.html', title='Anger - Mental Health', route='mental_health')
 
 
 if __name__ == "__main__":

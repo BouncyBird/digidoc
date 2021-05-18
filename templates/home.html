@@ -9,14 +9,17 @@
             "><button type="button" class="btn btn-info btn-lg m-1 lb7" data-tilt data-tilt-scale="1.05"
                         data-aos="zoom-in">DiseaseCheck</button></a>
         <div class="dropdown">
-                <button type="button" class="btn btn-info btn-lg m-1 lb5 dropdown-toggle" id="dropdownMenuButton"
+                <!--<button type="button" class="btn btn-info btn-lg m-1 lb5 dropdown-toggle" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tilt
-                        data-tilt-scale="1.05" data-aos="zoom-in">Mental Health</button>
+                        data-tilt-scale="1.05" data-aos="zoom-in">Mental Health</button>-->
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ url_for('anxiety') }}">Anxiety</a>
                         <a class="dropdown-item" href="{{ url_for('asmr') }}">ASMR</a>
                 </div>
         </div>
+        <a href="{{ url_for('clinics') }}">
+                <button type="button" class="btn btn-info btn-lg m-1 lb5" data-tilt data-tilt-scale="1.05"
+                        data-aos="zoom-in">Clinics</button></a>
         <a href="{{ url_for('routines') }}
     "><button type="button" class="btn btn-info btn-lg m-1 lb6" data-tilt data-tilt-scale="1.05"
                         data-aos="zoom-in">Routines</button></a>
@@ -26,9 +29,12 @@
         <a href="{{ url_for('contact') }}"><button type="button" class="btn btn-info btn-md m-1 lb3" data-tilt
                         data-tilt-scale="1.05" data-aos="zoom-in">Contact
                         Us</button></a>
-        <a href="{{ url_for('nutrisearch') }}
+        <!--<a href="{{ url_for('nutrisearch') }}
     "><button type="button" class="btn btn-info btn-md m-1 lb4" data-tilt data-tilt-scale="1.05"
-                        data-aos="zoom-in">NutriSearch</button></a>
+                        data-aos="zoom-in">NutriSearch</button></a>-->
+        <a href="https://www.instagram.com/gitdigidoctor/
+            "><button type="button" class="btn btn-info btn-md m-1 lb4" data-tilt data-tilt-scale="1.05"
+                        data-aos="zoom-in">Instagram</button></a>
 </div>
 <img src="https://raw.githubusercontent.com/BouncyBird/hhoster/main/oie_oie_overlay%20(1).gif" class="lb"
         data-aos='fade-up'>
