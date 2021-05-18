@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Markup
-from flask_assets import Bundle, Environment
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField, IntegerField
 from flask_wtf.file import FileField, FileRequired
