@@ -8,9 +8,15 @@
         <a href="{{ url_for('disease_check') }}
             "><button type="button" class="btn btn-info btn-lg m-1 lb7" data-tilt data-tilt-scale="1.05"
                         data-aos="zoom-in">DiseaseCheck</button></a>
-        <a href="{{ url_for('mental_health') }}
-    "><button type="button" class="btn btn-info btn-lg m-1 lb5" data-tilt data-tilt-scale="1.05"
-                        data-aos="zoom-in">Mental Health</button></a>
+        <div class="dropdown">
+                <button type="button" class="btn btn-info btn-lg m-1 lb5 dropdown-toggle" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tilt
+                        data-tilt-scale="1.05" data-aos="zoom-in">Mental Health</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ url_for('anxiety') }}">Anxiety</a>
+                        <a class="dropdown-item" href="{{ url_for('asmr') }}">ASMR</a>
+                </div>
+        </div>
         <a href="{{ url_for('routines') }}
     "><button type="button" class="btn btn-info btn-lg m-1 lb6" data-tilt data-tilt-scale="1.05"
                         data-aos="zoom-in">Routines</button></a>
