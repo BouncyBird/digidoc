@@ -5,6 +5,19 @@
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Disease Checker</legend>
+            <div class="form-group">
+                {{ form.gender.label(class="form-control-label font-bold") }}
+                {% if form.gender.errors %}
+                {{ form.gender(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.gender.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.gender(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
             <p>Check all the symptoms you have</p><br>
             <div class="form-check" data-aos="zoom-in">
                 {{ form.diarreah_vomit(class="form-check-input") }}

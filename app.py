@@ -23,7 +23,9 @@ disease_links = {
     'Common Cold': 'https://www.cdc.gov/features/rhinoviruses/index.html',
     'Covid-19': 'https://www.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/steps-when-sick.html',
     'Malaria': 'https://www.cdc.gov/parasites/malaria/index.html',
-    'Cholerae': 'https://www.cdc.gov/cholera/treatment/index.html'
+    'Cholera': 'https://www.cdc.gov/cholera/treatment/index.html',
+    'Measles': 'https://www.cdc.gov/measles/symptoms/signs-symptoms.html',
+    'Heart Attack': 'https://www.cdc.gov/heartdisease/heart_attack.htm'
 }
 
 disease_pages = {
@@ -32,7 +34,9 @@ disease_pages = {
     'Common Cold': 'https://www.cdc.gov/features/rhinoviruses/index.html',
     'Covid-19': 'https://www.coronavirus.gov/',
     'Malaria': 'https://www.cdc.gov/parasites/malaria/index.html',
-    'Cholerae': 'https://www.cdc.gov/cholera/index.html'
+    'Cholera': 'https://www.cdc.gov/cholera/index.html',
+    'Measles': 'https://www.cdc.gov/measles/index.html',
+    'Heart Attack': 'https://www.cdc.gov/heartdisease/heart_attack.htm'
 }
 
 disease_extra = {
@@ -41,7 +45,9 @@ disease_extra = {
     'Common Cold': '',
     'Covid-19': '',
     'Malaria': '',
-    'Cholerae': ''
+    'Cholera': '',
+    'Measles': '',
+    'Heart Attack': ''
 }
 
 app = Flask(__name__)
@@ -83,6 +89,8 @@ class ContactForm(FlaskForm):
 
 
 class DiseaseForm(FlaskForm):
+    gender = SelectField('Gender', choices=[
+                         ('Male', 'Male'), ('Female', 'Female')])
     diarreah_vomit = BooleanField('Diarreah and Vomit')
     body_aches = BooleanField('Body Aches')
     runny_nose = BooleanField('Runny Nose')
@@ -188,10 +196,11 @@ class ReciSearchForm(FlaskForm):
     submit = SubmitField('Search')"""
 
 
-def get_prediction(data={"Diarreah & Vomit": "Yes", "Body Aches": "Yes", "Runny Nose": "No", "Fever": "Yes", "Fatigue": "No", "Hemorrhage": "No", "Coughing": "Yes", "Shortness of Breath": "Yes", "Swollen Lymph Nodes": "Yes", "Headaches": "Yes", "Red eyes": "No", "Rapid Heart Rate": "Yes"}):
-    url = 'https://5syr7ttrk5.execute-api.us-east-1.amazonaws.com/Predict/88136aae-a71e-4bf4-98e2-50a9c807258a'
+def get_prediction(data={"Diarreah & Vomit": "No", "Body Aches": "Yes", "Runny nose": "No", "Fever": "Yes", "Fatigue": "Yes", "Hemorrhage": "No", "Coughing": "No", "Shortness of Breath": "No", "Swollen Lymph Nodes": "No", "Headaches": "Yes", "Red yes": "No", "Rapid Heart Rate": "No", "Gender": "Male"}):
+    url = 'https://yyuen2447j.execute-api.us-east-1.amazonaws.com/Predict/05a0f3ef-0b87-4eec-bff5-e5addcd8ec61'
     r = requests.post(url, data=json.dumps(data))
-    response = ast.literal_eval(ast.literal_eval(
+    print(r.text)
+    response = eval(eval(
         getattr(r, '_content').decode("utf-8"))['body'])
     return response
 
@@ -234,10 +243,11 @@ def conv(item):
 def disease_check():
     form = DiseaseForm()
     if form.validate_on_submit():
-        dd = {"Diarreah & Vomit": conv(form.diarreah_vomit.data), "Body Aches": conv(form.body_aches.data), "Runny Nose": conv(form.runny_nose.data), "Fever": conv(form.fever.data), "Fatigue": conv(form.fatigue.data), "Hemorrhage": conv(form.hemorrhage.data), "Coughing": conv(
-            form.coughing.data), "Shortness of Breath": conv(form.shortness_of_breath.data), "Swollen Lymph Nodes": conv(form.swollen_lymph_nodes.data), "Headaches": conv(form.headaches.data), "Red eyes": conv(form.red_eyes.data), "Rapid Heart Rate": conv(form.rapid_heart_rate.data)}
+        dd = {"Diarreah & Vomit": conv(form.diarreah_vomit.data), "Body Aches": conv(form.body_aches.data), "Runny nose": conv(form.runny_nose.data), "Fever": conv(form.fever.data), "Fatigue": conv(form.fatigue.data), "Hemorrhage": conv(form.hemorrhage.data), "Coughing": conv(
+            form.coughing.data), "Shortness of Breath": conv(form.shortness_of_breath.data), "Swollen Lymph Nodes": conv(form.swollen_lymph_nodes.data), "Headaches": conv(form.headaches.data), "Red yes": conv(form.red_eyes.data), "Rapid Heart Rate": conv(form.rapid_heart_rate.data), "Gender": form.gender.data}
+        print(dd)
         result = get_prediction(data=dd)
-        if result['predicted_label'] == 'Youre all good':
+        if result['predicted_label'] == "You're all good":
             flash(result['predicted_label'], 'success')
         elif result['predicted_label'] == 'Youre dead':
             flash(result['predicted_label'], 'danger')
